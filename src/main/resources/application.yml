@@ -19,7 +19,7 @@ datasources:
 jpa:
   default:
     entity-scan:
-      packages: 'com.example'
+      packages: 'com.outage'
     properties:
       hibernate:
         hbm2ddl:

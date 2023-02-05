@@ -1,4 +1,4 @@
-package com.example.entities;
+package com.outage.entities;
 
 import lombok.Data;
 
