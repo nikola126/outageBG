@@ -2,7 +2,7 @@ micronaut:
   application:
     name: outageBG
   metrics:
-    enabled: true
+    enabled: false
     export:
       prometheus:
         enabled: true
@@ -10,11 +10,16 @@ micronaut:
         step: PT1M
 datasources:
   default:
-    driver-class-name: org.postgresql.Driver
-    db-type: postgres
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/outageBG
+    dbType: postgres
     dialect: POSTGRES
+    username: postgres
+    password: postgres
 jpa:
   default:
+    entity-scan:
+      packages: 'com.example'
     properties:
       hibernate:
         hbm2ddl:
