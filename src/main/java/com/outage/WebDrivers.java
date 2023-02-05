@@ -15,6 +15,11 @@ public class WebDrivers {
 
         options.addArguments(List.of("--window-position=0,0"));
         options.addArguments(List.of("--window-size=1440,900"));
+        options.addArguments("--disable-extensions");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-application-cache");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-dev-shm-usage");
         options.addArguments(List.of("-headless"));
 
         return new RemoteWebDriver(new URL("http://localhost:4444"), options);
