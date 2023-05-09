@@ -9,8 +9,7 @@ import java.net.URL;
 import java.util.List;
 
 public class WebDrivers {
-    public static WebDriver getWebDriver() throws MalformedURLException {
-        System.out.println("Web Driver Setup");
+    public static WebDriver getFirefoxWebDriver() throws MalformedURLException {
         FirefoxOptions options = new FirefoxOptions();
 
         options.addArguments(List.of("--window-position=0,0"));
@@ -20,7 +19,7 @@ public class WebDrivers {
         options.addArguments("--disable-application-cache");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments(List.of("-headless"));
+        options.addArguments("--headless");
 
         return new RemoteWebDriver(new URL("http://localhost:4444"), options);
     }
