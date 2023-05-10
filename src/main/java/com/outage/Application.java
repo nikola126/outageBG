@@ -1,4 +1,4 @@
-package com.example;
+package com.outage;
 
 import io.micronaut.runtime.Micronaut;
 

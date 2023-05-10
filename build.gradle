@@ -5,7 +5,7 @@ plugins {
 }
 
 version = "0.1"
-group = "com.example"
+group = "com.outage"
 
 repositories {
     mavenCentral()
@@ -19,16 +19,14 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
-    implementation("io.micronaut.email:micronaut-email-mailjet")
     implementation("io.micronaut.micrometer:micronaut-micrometer-core")
     implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
-    implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("jakarta.annotation:jakarta.annotation-api")
-    implementation("org.apache.logging.log4j:log4j-core:2.19.0")
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.8.0'
+    implementation(group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '4.8.0')
+    implementation 'org.jsoup:jsoup:1.15.3'
     compileOnly("org.projectlombok:lombok")
-    runtimeOnly("org.apache.logging.log4j:log4j-api:2.19.0")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.17.2")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.mockito:mockito-core")
     implementation("io.micronaut:micronaut-validation")
@@ -37,7 +35,7 @@ dependencies {
 
 
 application {
-    mainClass.set("com.example.Application")
+    mainClass.set("com.outage.Application")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
@@ -50,7 +48,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.example.*")
+        annotations("com.outage.*")
     }
 }
 
