@@ -16,10 +16,13 @@ import org.openqa.selenium.interactions.Actions;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Getter
 @Setter
 public class SofiyskaVoda {
+    Logger logger = Logger.getLogger(this.getClass().getSimpleName());
     private Set<SofiyskaVodaEventDTO> eventDTOS = new LinkedHashSet<>();
 
     public void scrapeWaterStops() throws Exception {
@@ -41,20 +44,20 @@ public class SofiyskaVoda {
                     if ((i + 1) % 2 != 0) {
                         WebElement toClick = listAccordionElements.get(i);
                         javascriptExecutor.executeScript("arguments[0].scrollIntoView(false);", toClick);
+                        Thread.sleep(50);
                         actions.moveToElement(toClick).click().build().perform();
                         Thread.sleep(250);
 
                         actions.moveToElement(toClick).click().build().perform();
                     }
                 } catch (Exception e) {
-                    System.out.println("Error clicking");
+                    logger.log(Level.SEVERE, "Error clicking on event!");
                 }
             }
 
             parseEvents(webDriver);
         } catch (Exception e) {
-            System.out.println("Error parsing!");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error parsing events!");
             webDriver.quit();
         } finally {
             webDriver.quit();
@@ -88,7 +91,7 @@ public class SofiyskaVoda {
                 try {
                     eventDTOS.add(convertTextToDTO(td.text()));
                 } catch (Exception e) {
-                    System.out.println("Error extracting Sofiyska Voda event!");
+                    logger.log(Level.SEVERE, "Error extracting Sofiyska Voda event!");
                 }
             }
         }
