@@ -15,12 +15,16 @@ import java.time.temporal.ChronoField;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Getter
 @Setter
 public class ElectroHold {
+    Logger logger = Logger.getLogger(this.getClass().getSimpleName());
     private Set<ElectroHoldEventDTO> eventDTOS = new LinkedHashSet<>();
+
     public void scrapePowerStops() throws Exception {
         String powerStopsURL = "https://info.electrohold.bg/webint/vok/avplan.php";
         WebDriver webDriver = WebDrivers.getFirefoxWebDriver();
@@ -40,6 +44,7 @@ public class ElectroHold {
                 WebElement card = cardElements.get(lastCardElementIndex);
                 lastCardElementIndex += 1;
                 javascriptExecutor.executeScript("arguments[0].scrollIntoView(false);", card);
+                Thread.sleep(50);
                 actions.moveToElement(card).click().build().perform();
                 Thread.sleep(200);
 
@@ -56,7 +61,8 @@ public class ElectroHold {
                 for (int j = 0; j < listItems.size(); j++) {
                     WebElement li = listItems.get(lastListItemIndex);
                     lastListItemIndex += 1;
-                    javascriptExecutor.executeScript("arguments[0].scrollIntoView(false);",li);
+                    javascriptExecutor.executeScript("arguments[0].scrollIntoView(false);", li);
+                    Thread.sleep(50);
                     actions.moveToElement(li).click().build().perform();
                     Thread.sleep(1000);
 
@@ -92,7 +98,8 @@ public class ElectroHold {
                         if (!tag.getAttribute("src").contains("transparent"))
                             continue;
 
-                        javascriptExecutor.executeScript("arguments[0].scrollIntoView(false);",tag);
+                        javascriptExecutor.executeScript("arguments[0].scrollIntoView(false);", tag);
+                        Thread.sleep(50);
                         actions.moveToElement(tag).click().build().perform();
                         Thread.sleep(50);
 
@@ -117,8 +124,7 @@ public class ElectroHold {
 
             }
         } catch (Exception e) {
-            System.out.println("Error scraping power stops!");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error scraping power stops!");
             webDriver.quit();
         } finally {
             webDriver.quit();
@@ -126,7 +132,8 @@ public class ElectroHold {
 
         try {
             webDriver.close();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     private void parseEvents(WebDriver webDriver, String mapId) {
@@ -147,7 +154,7 @@ public class ElectroHold {
             try {
                 eventDTOS.add(convertTextToDTO(eventText));
             } catch (Exception e) {
-                System.out.println("Error extracting ElectroHold event!");
+                logger.log(Level.SEVERE, "Error extracting ElectroHold event!");
             }
         }
     }
